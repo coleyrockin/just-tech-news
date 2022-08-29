@@ -16,10 +16,14 @@ class Post extends Model {
           'post_url',
           'title',
           'created_at',
+<<<<<<< HEAD
           [
             sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'),
             'vote_count'
           ]
+=======
+          [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+>>>>>>> develop
         ],
         include: [
           {
