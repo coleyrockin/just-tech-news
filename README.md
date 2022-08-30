@@ -1,6 +1,6 @@
 # just-tech-news
 
-![link depolyed here](https://just-tech-newbie.herokuapp.com/)
+[link depolyed here](https://just-tech-newbie.herokuapp.com/)
 
 Created a new Comment model that stored user id's and post id's.
 
