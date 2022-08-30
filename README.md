@@ -1,5 +1,6 @@
 # just-tech-news
 
+![link depolyed here](https://just-tech-newbie.herokuapp.com/)
 
 Created a new Comment model that stored user id's and post id's.
 
@@ -28,4 +29,3 @@ Protected user passwords by hashing with the bcrypt package.
 Set up the groundwork for user authentication.
 
 Performed raw SQL queries using Sequelize literals.
-
