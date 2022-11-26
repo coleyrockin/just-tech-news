@@ -17,11 +17,11 @@ Just Tech News, a tech news website where users can post, upvote, and comment on
 ## Link to heroku deplyment
 [Heroku link depolyed here](https://just-tech-newbie.herokuapp.com/)
 
-### Screenshot
+## Screenshot
 
 ![img](./public/assets/justtechnews.png)
 
-### Author & Contact Info
+## Author & Contact Info
 Boyd Roberts
 
 [Coleyrockin Github](https://github.com/coleyrockin)
