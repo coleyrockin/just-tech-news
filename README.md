@@ -14,6 +14,16 @@ Just Tech News, a tech news website where users can post, upvote, and comment on
 - Sequelize
 - Deployed on Heroku / Plugin: JawsDB MySQL
 
+## Link to heroku deplyment
 [Heroku link depolyed here](https://just-tech-newbie.herokuapp.com/)
 
-[Github: Coleyrockin](https://github.com/coleyrockin?tab=repositories)
+### Screenshot
+
+![img](./public/assets/justtechnews.png)
+
+### Author & Contact Info
+Boyd Roberts
+
+[Coleyrockin Github](https://github.com/coleyrockin)
+
+[Coleyrockin@aol.com](mailto:coleyrockin@aol.com)
