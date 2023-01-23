@@ -1,8 +1,8 @@
-# Just tech news
+# Just Tech News
 
-Just Tech News, a tech news website where users can post, upvote, and comment on links to news articles.
+Just Tech News is a tech news website where users can post, upvote, and comment on links to news articles.
 
-## Usage
+### Usage
 
 - Bcrypt
 - Connect-session-sequelize
@@ -14,16 +14,16 @@ Just Tech News, a tech news website where users can post, upvote, and comment on
 - Sequelize
 - Deployed on Heroku / Plugin: JawsDB MySQL
 
-## Link to heroku deplyment
-[Heroku link depolyed here](https://just-tech-newbie.herokuapp.com/)
+### Heroku deployment
+[Heroku link deployed here](https://just-tech-newbie.herokuapp.com/)
 
-## Screenshot
+### Screenshot
 
 ![img](./public/assets/justtechnews.png)
 
 ## Author & Contact Info
 Boyd Roberts
 
-[Coleyrockin Github](https://github.com/coleyrockin)
+[Coleyrockin GitHub](https://github.com/coleyrockin)
 
 [Coleyrockin@aol.com](mailto:coleyrockin@aol.com)
