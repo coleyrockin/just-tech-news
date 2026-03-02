@@ -14,6 +14,10 @@ Just Tech News is a tech news website where users can post, upvote, and comment 
 - Sequelize
 - Deployed on Heroku / Plugin: JawsDB MySQL
 
+### Testing
+- Install dependencies with `npm install`
+- Run the helper unit tests with `npm test`
+
 ### Heroku deployment
 [Heroku link deployed here](https://just-tech-newbie.herokuapp.com/)
 

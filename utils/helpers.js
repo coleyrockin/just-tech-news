@@ -1,8 +1,7 @@
 module.exports = {
   format_date: date => {
-    return `${new Date(date).getMonth() + 1}/${new Date(date).getDate()}/${new Date(
-      date
-    ).getFullYear()}`;
+    const parsedDate = new Date(date);
+    return `${parsedDate.getMonth() + 1}/${parsedDate.getDate()}/${parsedDate.getFullYear()}`;
   },
   format_url: url => {
     return url
