@@ -1,5 +1,89 @@
 # Just Tech News
 
+![Express.js](https://img.shields.io/badge/Express.js-4-000000?style=flat&logo=express&logoColor=white)
+![Handlebars](https://img.shields.io/badge/Handlebars-6-f0772b?style=flat&logo=handlebarsdotjs&logoColor=white)
+![Sequelize](https://img.shields.io/badge/Sequelize-6-52B0E7?style=flat&logo=sequelize&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-2-4479A1?style=flat&logo=mysql&logoColor=white)
+![Netlify](https://img.shields.io/badge/Netlify-Functions-00C7B7?style=flat&logo=netlify&logoColor=white)
+![License](https://img.shields.io/badge/License-ISC-blue?style=flat)
+
+## About
+
+A tech news website where users can post, upvote, and comment on links to news articles. Built with Express, Handlebars, and Sequelize following the MVC architecture pattern. Deployable as Netlify Functions via serverless-http.
+
+## Features
+
+- User signup and login with session-based authentication
+- Create, edit, and delete tech news posts
+- Upvote posts from other users
+- Comment on posts
+- User dashboard for managing your own posts
+- Handlebars server-side rendering
+- Netlify Functions serverless deployment
+- Database seeding with sample data
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Server | Node.js, Express.js 4 |
+| Templating | Express Handlebars 6 |
+| Database | MySQL, Sequelize 6, mysql2 2 |
+| Auth | bcryptjs 2, express-session 1, connect-session-sequelize 7 |
+| Deployment | Netlify Functions, serverless-http 3 |
+| Config | dotenv 16 |
+| Testing | Jest 30 |
+
+## Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/coleyrockin/just-tech-news.git
+cd just-tech-news
+
+# Install dependencies
+npm install
+
+# Create the database
+mysql -u <user> -p < db/schema.sql
+
+# Configure environment variables
+cp .env.example .env
+
+# Seed test data (optional)
+npm run seeds
+
+# Start the application
+npm start
+```
+
+The app runs at `http://localhost:3001` by default.
+
+## Project Structure
+
+```
+just-tech-news/
+├── __tests__/
+├── config/
+├── controllers/
+├── db/
+├── models/
+├── netlify/
+│   └── functions/
+├── public/
+├── seeds/
+├── utils/
+├── views/
+├── app.js
+├── server.js
+├── netlify.toml
+└── package.json
+```
+
+---
+
+> Built by [coleyrockin](https://github.com/coleyrockin)# Just Tech News
+
 Just Tech News is a tech news website where users can post, upvote, and comment on links to news articles.
 
 ## Architecture
