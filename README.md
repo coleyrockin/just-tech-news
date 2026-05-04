@@ -47,14 +47,14 @@ cd just-tech-news
 npm install
 
 # Set up environment variables
-cp .env.EXAMPLE .env
+cp .env.example .env
 # Edit .env with your MySQL credentials
 
 # Create the database
 mysql -u root -p < db/schema.sql
 
 # Seed the database
-npm run seed
+npm run seeds
 
 # Start the server
 npm start

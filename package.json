@@ -1,12 +1,17 @@
 {
   "name": "just-tech-news",
   "version": "1.0.0",
-  "description": "",
+  "description": "Full-stack tech news aggregator built with Express, Handlebars, and Sequelize. Users post links, upvote, and comment — Hacker News style. Deployed via Netlify Functions.",
   "main": "server.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "start": "node server.js",
     "seeds": "node seeds/index.js",
     "test": "jest",
+    "lint": "eslint .",
+    "format": "prettier --write .",
     "netlify:dev": "netlify dev",
     "deploy:preview": "netlify deploy --dir=public",
     "deploy:prod": "netlify deploy --dir=public --prod"
@@ -15,8 +20,16 @@
     "type": "git",
     "url": "git+https://github.com/coleyrockin/just-tech-news.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "express",
+    "handlebars",
+    "sequelize",
+    "mysql",
+    "mvc",
+    "netlify-functions",
+    "serverless"
+  ],
+  "author": "Boyd Roberts",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/coleyrockin/just-tech-news/issues"
@@ -24,16 +37,19 @@
   "homepage": "https://github.com/coleyrockin/just-tech-news#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "connect-session-sequelize": "^7.1.4",
+    "connect-session-sequelize": "^8.0.6",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",
-    "mysql2": "^2.3.3",
+    "mysql2": "^3.22.3",
     "sequelize": "^6.21.3",
     "serverless-http": "^3.2.0"
   },
   "devDependencies": {
-    "jest": "^30.2.0"
+    "@eslint/js": "^9.39.4",
+    "eslint": "^9.39.4",
+    "jest": "^30.2.0",
+    "prettier": "^3.8.3"
   }
 }
