@@ -21,7 +21,10 @@ User.init(
     },
     username: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: [3, 32]
+      }
     },
     email: {
       type: DataTypes.STRING,
@@ -35,7 +38,7 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [4]
+        len: [8, 128]
       }
     }
   },
@@ -48,7 +51,10 @@ User.init(
       },
 
       async beforeUpdate(updatedUserData) {
-        updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+        if (updatedUserData.changed('password')) {
+          updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+        }
+
         return updatedUserData;
       }
     },

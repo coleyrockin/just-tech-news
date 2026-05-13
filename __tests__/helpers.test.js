@@ -1,4 +1,4 @@
-const {format_date, format_plural, format_url} = require('../utils/helpers');
+const { format_date, format_plural, format_url } = require('../utils/helpers');
 
 test('format_url() returns a simplified url string', () => {
   const url1 = format_url('http://test.com/page/1');
@@ -8,6 +8,12 @@ test('format_url() returns a simplified url string', () => {
   expect(url1).toBe('test.com');
   expect(url2).toBe('coolstuff.com');
   expect(url3).toBe('google.com');
+});
+
+test('format_url() only removes a leading www subdomain', () => {
+  const url = format_url('https://docs.www.example.com/path');
+
+  expect(url).toBe('docs.www.example.com');
 });
 
 test('format_plural() returns a pluralized word', () => {

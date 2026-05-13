@@ -6,13 +6,7 @@ const buildVoteCountAttribute = () => [
   'vote_count'
 ];
 
-const postAttributes = () => [
-  'id',
-  'post_url',
-  'title',
-  'created_at',
-  buildVoteCountAttribute()
-];
+const postAttributes = () => ['id', 'post_url', 'title', 'created_at', buildVoteCountAttribute()];
 
 const commentInclude = () => ({
   model: Comment,
@@ -36,7 +30,10 @@ const postInclude = ({ includeAuthor = true } = {}) => {
   return include;
 };
 
+const postOrder = () => [['created_at', 'DESC']];
+
 module.exports = {
   postAttributes,
-  postInclude
+  postInclude,
+  postOrder
 };

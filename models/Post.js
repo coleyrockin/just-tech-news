@@ -1,12 +1,21 @@
 const { Model, DataTypes } = require('sequelize');
+const { URL } = require('url');
 const sequelize = require('../config/connection');
 // create our Post model
 class Post extends Model {
   static upvote(body, models) {
-    return models.Vote.create({
-      user_id: body.user_id,
-      post_id: body.post_id
-    }).then(() => {
+    return models.Vote.findOrCreate({
+      where: {
+        user_id: body.user_id,
+        post_id: body.post_id
+      }
+    }).then(([_vote, created]) => {
+      if (!created) {
+        const error = new Error('You have already upvoted this post.');
+        error.statusCode = 409;
+        throw error;
+      }
+
       return Post.findOne({
         where: {
           id: body.post_id
@@ -16,7 +25,10 @@ class Post extends Model {
           'post_url',
           'title',
           'created_at',
-          [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+          [
+            sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'),
+            'vote_count'
+          ]
         ],
         include: [
           {
@@ -26,6 +38,10 @@ class Post extends Model {
               model: models.User,
               attributes: ['username']
             }
+          },
+          {
+            model: models.User,
+            attributes: ['username']
           }
         ]
       });
@@ -50,7 +66,14 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isURL: true
+        isURL: true,
+        isHttpUrl(value) {
+          const { protocol } = new URL(value);
+
+          if (!['http:', 'https:'].includes(protocol)) {
+            throw new Error('Post URL must use HTTP or HTTPS.');
+          }
+        }
       }
     },
     user_id: {

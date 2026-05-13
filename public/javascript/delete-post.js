@@ -1,17 +1,16 @@
 async function deleteFormHandler(event) {
   event.preventDefault();
 
-  const id = window.location.toString().split('/')[
-    window.location.toString().split('/').length - 1
-  ];
-  const response = await fetch(`/api/posts/${id}`, {
-    method: 'DELETE'
-  });
+  const id = window.location.pathname.split('/').filter(Boolean).pop();
 
-  if (response.ok) {
+  try {
+    await window.apiRequest(`/api/posts/${id}`, {
+      method: 'DELETE'
+    });
+
     document.location.replace('/dashboard/');
-  } else {
-    alert(response.statusText);
+  } catch (error) {
+    alert(error.message);
   }
 }
 

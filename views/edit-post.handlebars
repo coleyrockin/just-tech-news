@@ -5,7 +5,8 @@
   </h2>
   <form class="edit-post-form">
     <div>
-      <input name="post-title" type="text" value="{{post.title}}" />
+      <label for="post-title">Title</label>
+      <input id="post-title" name="post-title" type="text" value="{{post.title}}" required />
       <span>({{format_url post.post_url}})</span>
     </div>
     <div>
@@ -20,11 +21,12 @@
 
 <form class="comment-form">
   <div>
-    <textarea name="comment-body"></textarea>
+    <label for="comment-body">Comment</label>
+    <textarea id="comment-body" name="comment-body" required></textarea>
   </div>
 
   <div>
-    <button type="submit">add comment</button>
+    <button type="submit">Add comment</button>
   </div>
 </form>
 

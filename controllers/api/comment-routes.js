@@ -1,47 +1,54 @@
 const router = require('express').Router();
 const { Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
+const { asyncHandler, httpError } = require('../../utils/http');
 
-router.get('/', (req, res) => {
-  Comment.findAll()
-    .then(dbCommentData => res.json(dbCommentData))
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
-
-router.post('/', withAuth, (req, res) => {
-  // expects => {comment_text: "This is the comment", user_id: 1, post_id: 2}
-  Comment.create({
-    comment_text: req.body.comment_text,
-    user_id: req.session.user_id,
-    post_id: req.body.post_id
+router.get(
+  '/',
+  asyncHandler(async (_req, res) => {
+    const comments = await Comment.findAll();
+    res.json(comments);
   })
-    .then(dbCommentData => res.json(dbCommentData))
-    .catch(err => {
-      console.log(err);
-      res.status(400).json(err);
-    });
-});
+);
 
-router.delete('/:id', withAuth, (req, res) => {
-  Comment.destroy({
-    where: {
-      id: req.params.id
+router.post(
+  '/',
+  withAuth,
+  asyncHandler(async (req, res) => {
+    const commentText =
+      typeof req.body.comment_text === 'string' ? req.body.comment_text.trim() : '';
+
+    if (!commentText || !req.body.post_id) {
+      throw httpError(400, 'Comment text and post id are required.');
     }
-  })
-    .then(dbCommentData => {
-      if (!dbCommentData) {
-        res.status(404).json({ message: 'No comment found with this id!' });
-        return;
-      }
-      res.json(dbCommentData);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
+
+    const comment = await Comment.create({
+      comment_text: commentText,
+      user_id: req.session.user_id,
+      post_id: req.body.post_id
     });
-});
+
+    res.status(201).json(comment);
+  })
+);
+
+router.delete(
+  '/:id',
+  withAuth,
+  asyncHandler(async (req, res) => {
+    const deletedCount = await Comment.destroy({
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id
+      }
+    });
+
+    if (!deletedCount) {
+      throw httpError(404, 'No comment found for your account with this id.');
+    }
+
+    res.json({ message: 'Comment deleted.' });
+  })
+);
 
 module.exports = router;

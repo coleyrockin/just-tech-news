@@ -1,23 +1,22 @@
 async function upvoteClickHandler(event) {
   event.preventDefault();
 
-  const id = window.location.toString().split('/')[
-    window.location.toString().split('/').length - 1
-  ];
-  const response = await fetch('/api/posts/upvote', {
-    method: 'PUT',
-    body: JSON.stringify({
-      post_id: id
-    }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
+  const id = window.location.pathname.split('/').filter(Boolean).pop();
 
-  if (response.ok) {
+  try {
+    await window.apiRequest('/api/posts/upvote', {
+      method: 'PUT',
+      body: JSON.stringify({
+        post_id: id
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
     document.location.reload();
-  } else {
-    alert(response.statusText);
+  } catch (error) {
+    alert(error.message);
   }
 }
 

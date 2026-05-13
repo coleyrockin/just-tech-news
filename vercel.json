@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "views/**"
+    }
+  },
+  "routes": [
+    {
+      "src": "/stylesheets/(.*)",
+      "dest": "/public/stylesheets/$1"
+    },
+    {
+      "src": "/javascript/(.*)",
+      "dest": "/public/javascript/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/public/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.js"
+    }
+  ]
+}

@@ -1,54 +1,48 @@
 const router = require('express').Router();
 const { Post } = require('../models');
-const { postAttributes, postInclude } = require('../utils/post-query');
+const { asyncHandler, httpError } = require('../utils/http');
+const { postAttributes, postInclude, postOrder } = require('../utils/post-query');
 
-// get all posts for homepage
-router.get('/', (req, res) => {
-  Post.findAll({
-    attributes: postAttributes(),
-    include: postInclude()
-  })
-    .then(dbPostData => {
-      const posts = dbPostData.map(post => post.get({ plain: true }));
-
-      res.render('homepage', {
-        posts,
-        loggedIn: req.session.loggedIn
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
+router.get(
+  '/',
+  asyncHandler(async (req, res) => {
+    const postData = await Post.findAll({
+      attributes: postAttributes(),
+      include: postInclude(),
+      order: postOrder()
     });
-});
+    const posts = postData.map(post => post.get({ plain: true }));
 
-// get single post
-router.get('/post/:id', (req, res) => {
-  Post.findOne({
-    where: {
-      id: req.params.id
-    },
-    attributes: postAttributes(),
-    include: postInclude()
-  })
-    .then(dbPostData => {
-      if (!dbPostData) {
-        res.status(404).json({ message: 'No post found with this id' });
-        return;
-      }
-
-      const post = dbPostData.get({ plain: true });
-
-      res.render('single-post', {
-        post,
-        loggedIn: req.session.loggedIn
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
+    res.render('homepage', {
+      posts,
+      loggedIn: req.session.loggedIn
     });
-});
+  })
+);
+
+router.get(
+  '/post/:id',
+  asyncHandler(async (req, res) => {
+    const postData = await Post.findOne({
+      where: {
+        id: req.params.id
+      },
+      attributes: postAttributes(),
+      include: postInclude()
+    });
+
+    if (!postData) {
+      throw httpError(404, 'No post found with this id.');
+    }
+
+    const post = postData.get({ plain: true });
+
+    res.render('single-post', {
+      post,
+      loggedIn: req.session.loggedIn
+    });
+  })
+);
 
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {

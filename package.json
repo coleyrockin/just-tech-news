@@ -1,7 +1,7 @@
 {
   "name": "just-tech-news",
   "version": "1.0.0",
-  "description": "Full-stack tech news aggregator built with Express, Handlebars, and Sequelize. Users post links, upvote, and comment — Hacker News style. Deployed via Netlify Functions.",
+  "description": "Full-stack tech news aggregator built with Express, Handlebars, Sequelize, and MySQL. Users post links, upvote, and comment.",
   "main": "server.js",
   "engines": {
     "node": ">=20.0.0"
@@ -11,10 +11,13 @@
     "seeds": "node seeds/index.js",
     "test": "jest",
     "lint": "eslint .",
+    "check": "npm run lint && npm test",
     "format": "prettier --write .",
     "netlify:dev": "netlify dev",
-    "deploy:preview": "netlify deploy --dir=public",
-    "deploy:prod": "netlify deploy --dir=public --prod"
+    "deploy:preview": "vercel deploy . -y",
+    "deploy:prod": "vercel deploy . --prod -y",
+    "netlify:deploy:preview": "netlify deploy --build",
+    "netlify:deploy:prod": "netlify deploy --build --prod"
   },
   "repository": {
     "type": "git",
@@ -26,6 +29,7 @@
     "sequelize",
     "mysql",
     "mvc",
+    "vercel",
     "netlify-functions",
     "serverless"
   ],
