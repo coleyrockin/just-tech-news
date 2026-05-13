@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const { URL } = require('url');
 const sequelize = require('../config/connection');
-// create our Post model
+
 class Post extends Model {
   static upvote(body, models) {
     return models.Vote.findOrCreate({
@@ -49,7 +49,6 @@ class Post extends Model {
   }
 }
 
-// create fields/columns for Post model
 Post.init(
   {
     id: {

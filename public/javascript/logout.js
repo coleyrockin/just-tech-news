@@ -1,4 +1,9 @@
 async function logout() {
+  const button = document.querySelector('#logout');
+
+  window.setStatus(document, '');
+  window.setLoading(button, true);
+
   try {
     await window.apiRequest('/api/users/logout', {
       method: 'post',
@@ -7,7 +12,8 @@ async function logout() {
 
     document.location.replace('/');
   } catch (error) {
-    alert(error.message);
+    window.setStatus(document, error.message, 'error');
+    window.setLoading(button, false);
   }
 }
 

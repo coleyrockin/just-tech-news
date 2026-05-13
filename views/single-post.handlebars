@@ -1,16 +1,17 @@
 {{> post-info post}}
 
 {{#if loggedIn}}
-<form class="comment-form">
+<form class="comment-form" data-status-scope>
   <div>
     <label for="comment-body">Comment</label>
     <textarea id="comment-body" name="comment-body" required></textarea>
   </div>
 
   <div>
-    <button type="submit">Add comment</button>
-    <button type="button" class="upvote-btn">Upvote</button>
+    <button type="submit" data-loading-text="Posting...">Add comment</button>
+    <button type="button" class="upvote-btn" data-loading-text="Upvoting...">Upvote</button>
   </div>
+  <p class="form-status" data-status role="status" aria-live="polite"></p>
 </form>
 {{/if}}
 

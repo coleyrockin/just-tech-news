@@ -20,7 +20,7 @@
       <nav>
         {{#if loggedIn}}
         <a href="/dashboard">Dashboard</a>
-        <button id="logout" class="btn-no-style">logout</button>
+        <button id="logout" class="btn-no-style" data-loading-text="Logging out...">Log out</button>
         {{else}}
         <a href="/login">Login</a>
         {{/if}}
@@ -31,6 +31,7 @@
     </main>
     <footer>
       Just Tech News
+      <span id="global-status" class="global-status" role="status" aria-live="polite"></span>
     </footer>
   </div>
 

@@ -1,13 +1,18 @@
 async function editFormHandler(event) {
   event.preventDefault();
 
+  const form = event.currentTarget;
+  const button = form.querySelector('button[type="submit"]');
   const title = document.querySelector('input[name="post-title"]').value.trim();
   const id = window.location.pathname.split('/').filter(Boolean).pop();
 
   if (!title) {
-    alert('Post title is required.');
+    window.setStatus(form, 'Post title is required.', 'error');
     return;
   }
+
+  window.setStatus(form, '');
+  window.setLoading(button, true);
 
   try {
     await window.apiRequest(`/api/posts/${id}`, {
@@ -22,7 +27,8 @@ async function editFormHandler(event) {
 
     document.location.replace('/dashboard/');
   } catch (error) {
-    alert(error.message);
+    window.setStatus(form, error.message, 'error');
+    window.setLoading(button, false);
   }
 }
 

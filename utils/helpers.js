@@ -18,5 +18,8 @@ module.exports = {
     }
 
     return word;
+  },
+  display_user: user => {
+    return user?.username || 'deleted user';
   }
 };

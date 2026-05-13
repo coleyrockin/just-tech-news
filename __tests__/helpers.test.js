@@ -1,4 +1,4 @@
-const { format_date, format_plural, format_url } = require('../utils/helpers');
+const { display_user, format_date, format_plural, format_url } = require('../utils/helpers');
 
 test('format_url() returns a simplified url string', () => {
   const url1 = format_url('http://test.com/page/1');
@@ -28,4 +28,9 @@ test('format_date() returns a date string', () => {
   const date = new Date('2020-03-20 16:12:03');
 
   expect(format_date(date)).toBe('3/20/2020');
+});
+
+test('display_user() returns a username or deleted-user fallback', () => {
+  expect(display_user({ username: 'casey' })).toBe('casey');
+  expect(display_user(null)).toBe('deleted user');
 });

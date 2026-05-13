@@ -1,10 +1,15 @@
 async function commentFormHandler(event) {
   event.preventDefault();
 
+  const form = event.currentTarget;
+  const button = form.querySelector('button[type="submit"]');
   const comment_text = document.querySelector('textarea[name="comment-body"]').value.trim();
   const post_id = window.location.pathname.split('/').filter(Boolean).pop();
 
   if (comment_text) {
+    window.setStatus(form, '');
+    window.setLoading(button, true);
+
     try {
       await window.apiRequest('/api/comments', {
         method: 'POST',
@@ -19,8 +24,11 @@ async function commentFormHandler(event) {
 
       document.location.reload();
     } catch (error) {
-      alert(error.message);
+      window.setStatus(form, error.message, 'error');
+      window.setLoading(button, false);
     }
+  } else {
+    window.setStatus(form, 'Comment text is required.', 'error');
   }
 }
 

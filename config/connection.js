@@ -1,6 +1,6 @@
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
 
-require("dotenv").config();
+require('dotenv').config();
 
 const parseBoolean = value => {
   if (!value) {
@@ -42,18 +42,12 @@ const configWithSsl = Object.keys(sslConfig).length
   ? { ...sharedConfig, dialectOptions: sslConfig }
   : sharedConfig;
 
-// create connection to our db
 const sequelize = databaseUrl
   ? new Sequelize(databaseUrl, configWithSsl)
-  : new Sequelize(
-      process.env.DB_NAME,
-      process.env.DB_USER,
-      process.env.DB_PASSWORD,
-      {
-        host: process.env.DB_HOST || "localhost",
-        port: Number(process.env.DB_PORT) || 3306,
-        ...configWithSsl
-      }
-    );
+  : new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+      host: process.env.DB_HOST || 'localhost',
+      port: Number(process.env.DB_PORT) || 3306,
+      ...configWithSsl
+    });
 
 module.exports = sequelize;

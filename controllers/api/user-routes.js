@@ -4,6 +4,7 @@ const withAuth = require('../../utils/auth');
 const { asyncHandler, httpError } = require('../../utils/http');
 
 const USER_FIELDS = ['username', 'email', 'password'];
+const PUBLIC_USER_ATTRIBUTES = ['id', 'username'];
 
 const serializeUser = user => {
   const safeUser = user.get({ plain: true });
@@ -60,7 +61,7 @@ router.get(
   '/',
   asyncHandler(async (_req, res) => {
     const users = await User.findAll({
-      attributes: { exclude: ['password'] }
+      attributes: PUBLIC_USER_ATTRIBUTES
     });
 
     res.json(users);
@@ -71,7 +72,7 @@ router.get(
   '/:id',
   asyncHandler(async (req, res) => {
     const user = await User.findOne({
-      attributes: { exclude: ['password'] },
+      attributes: PUBLIC_USER_ATTRIBUTES,
       where: {
         id: req.params.id
       },

@@ -1,5 +1,5 @@
 <section class="auth-grid">
-  <form class="login-form">
+  <form class="login-form" data-status-scope>
     <h2>Log in</h2>
     <div>
       <label for="email-login">Email</label>
@@ -10,11 +10,12 @@
       <input type="password" id="password-login" autocomplete="current-password" required />
     </div>
     <div>
-      <button type="submit">Log in</button>
+      <button type="submit" data-loading-text="Logging in...">Log in</button>
     </div>
+    <p class="form-status" data-status role="status" aria-live="polite"></p>
   </form>
 
-  <form class="signup-form">
+  <form class="signup-form" data-status-scope>
     <h2>Sign up</h2>
     <div>
       <label for="username-signup">Username</label>
@@ -29,8 +30,9 @@
       <input type="password" id="password-signup" autocomplete="new-password" minlength="8" required />
     </div>
     <div>
-      <button type="submit">Sign up</button>
+      <button type="submit" data-loading-text="Creating account...">Sign up</button>
     </div>
+    <p class="form-status" data-status role="status" aria-live="polite"></p>
   </form>
 </section>
 

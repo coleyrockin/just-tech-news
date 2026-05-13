@@ -1,13 +1,18 @@
 async function newFormHandler(event) {
   event.preventDefault();
 
+  const form = event.currentTarget;
+  const button = form.querySelector('button[type="submit"]');
   const title = document.querySelector('input[name="post-title"]').value.trim();
   const post_url = document.querySelector('input[name="post-url"]').value.trim();
 
   if (!title || !post_url) {
-    alert('Post title and URL are required.');
+    window.setStatus(form, 'Post title and URL are required.', 'error');
     return;
   }
+
+  window.setStatus(form, '');
+  window.setLoading(button, true);
 
   try {
     await window.apiRequest('/api/posts', {
@@ -23,7 +28,8 @@ async function newFormHandler(event) {
 
     document.location.replace('/dashboard');
   } catch (error) {
-    alert(error.message);
+    window.setStatus(form, error.message, 'error');
+    window.setLoading(button, false);
   }
 }
 
