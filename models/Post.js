@@ -42,6 +42,14 @@ class Post extends Model {
           {
             model: models.User,
             attributes: ['username']
+          },
+          {
+            model: models.Tag,
+            as: 'tags',
+            attributes: ['id', 'name', 'slug', 'color_token'],
+            through: {
+              attributes: []
+            }
           }
         ]
       });

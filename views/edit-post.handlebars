@@ -9,6 +9,17 @@
       <input id="post-title" name="post-title" type="text" value="{{post.title}}" required />
       <span>({{format_url post.post_url}})</span>
     </div>
+    <fieldset class="tag-picker">
+      <legend>Topics</legend>
+      <div class="tag-options">
+        {{#each tags as |tag|}}
+        <label>
+          <input type="checkbox" name="tag-ids" value="{{tag.id}}" {{#if tag.selected}}checked{{/if}} />
+          <span class="tag-pill {{tag.color_token}}">{{tag.name}}</span>
+        </label>
+        {{/each}}
+      </div>
+    </fieldset>
     <div>
       {{post.vote_count}} {{format_plural "point" post.vote_count}} by you on {{format_date post.created_at}}
       |

@@ -1,0 +1,19 @@
+<section class="discovery-hero">
+  <div>
+    <p class="eyebrow">Topics</p>
+    <h2>Browse Technology Topics</h2>
+    <p>Jump into focused feeds for the areas people are sharing and discussing.</p>
+  </div>
+</section>
+
+<section class="topic-grid">
+  {{#each tags as |tag|}}
+  <a class="topic-card" href="/topics/{{tag.slug}}">
+    <span class="tag-pill {{tag.color_token}}">{{tag.name}}</span>
+    <strong>{{tag.name}}</strong>
+    <span>{{tag.description}}</span>
+  </a>
+  {{else}}
+  <p class="empty-state">No topics are available yet.</p>
+  {{/each}}
+</section>

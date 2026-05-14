@@ -3,6 +3,13 @@
     <a href="{{post_url}}" target="_blank" rel="noopener noreferrer">{{title}}</a>
     <span>({{format_url post_url}})</span>
   </div>
+  {{#if tags.length}}
+  <div class="tag-row">
+    {{#each tags as |tag|}}
+    <a class="tag-pill {{tag.color_token}}" href="/topics/{{tag.slug}}">{{tag.name}}</a>
+    {{/each}}
+  </div>
+  {{/if}}
   <div class="meta">
     {{vote_count}} {{format_plural "point" vote_count}} by {{display_user user}} on {{format_date created_at}}
     |

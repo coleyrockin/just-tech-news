@@ -10,6 +10,17 @@
       <label for="post-url">Link</label>
       <input type="url" id="post-url" name="post-url" required />
     </div>
+    <fieldset class="tag-picker">
+      <legend>Topics</legend>
+      <div class="tag-options">
+        {{#each tags as |tag|}}
+        <label>
+          <input type="checkbox" name="tag-ids" value="{{tag.id}}" />
+          <span class="tag-pill {{tag.color_token}}">{{tag.name}}</span>
+        </label>
+        {{/each}}
+      </div>
+    </fieldset>
     <button type="submit" class="btn" data-loading-text="Publishing...">Create</button>
     <p class="form-status" data-status role="status" aria-live="polite"></p>
   </form>

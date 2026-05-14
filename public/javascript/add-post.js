@@ -3,8 +3,11 @@ async function newFormHandler(event) {
 
   const form = event.currentTarget;
   const button = form.querySelector('button[type="submit"]');
-  const title = document.querySelector('input[name="post-title"]').value.trim();
-  const post_url = document.querySelector('input[name="post-url"]').value.trim();
+  const title = form.querySelector('input[name="post-title"]').value.trim();
+  const post_url = form.querySelector('input[name="post-url"]').value.trim();
+  const tag_ids = Array.from(form.querySelectorAll('input[name="tag-ids"]:checked')).map(
+    input => input.value
+  );
 
   if (!title || !post_url) {
     window.setStatus(form, 'Post title and URL are required.', 'error');
@@ -19,7 +22,8 @@ async function newFormHandler(event) {
       method: 'POST',
       body: JSON.stringify({
         title,
-        post_url
+        post_url,
+        tag_ids
       }),
       headers: {
         'Content-Type': 'application/json'

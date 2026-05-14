@@ -1,9 +1,84 @@
+<section class="discovery-hero">
+  <div>
+    <p class="eyebrow">Discovery</p>
+    <h2>{{#if topic}}{{topic.name}}{{else}}Latest Tech Stories{{/if}}</h2>
+    <p>
+      {{#if topic}}
+      Browse the newest links and discussions in {{topic.name}}.
+      {{else}}
+      Search, filter, and rank community-submitted technology links.
+      {{/if}}
+    </p>
+  </div>
+
+  <a class="btn secondary" href="/topics">Browse topics</a>
+</section>
+
+<section class="discovery-controls">
+  <form class="search-form" action="{{searchAction}}" method="GET">
+    <label for="site-search">Search stories</label>
+    <div class="search-row">
+      <input
+        type="search"
+        id="site-search"
+        name="q"
+        value="{{searchValue}}"
+        placeholder="Search React, AI, security..."
+        maxlength="80"
+      />
+      <input type="hidden" name="sort" value="{{filters.sort}}" />
+      <button type="submit" class="btn">Search</button>
+    </div>
+  </form>
+
+  <nav class="sort-tabs" aria-label="Feed sort">
+    {{#each sortOptions as |option|}}
+    <a class="{{#if option.active}}active{{/if}}" href="{{option.href}}">{{option.label}}</a>
+    {{/each}}
+  </nav>
+
+  <div class="topic-strip" aria-label="Topics">
+    <a class="{{#unless topic}}active{{/unless}}" href="/">All</a>
+    {{#each tagOptions as |tag|}}
+    <a class="{{#if tag.active}}active{{/if}}" href="{{tag.href}}">{{tag.name}}</a>
+    {{/each}}
+  </div>
+</section>
+
 <ol class="post-list">
   {{#each posts as |post|}}
   <li>
     {{> post-info post }}
   </li>
   {{else}}
-  <li class="empty-state">No stories have been posted yet.</li>
+  <li class="empty-state">
+    {{#if searchValue}}
+    No results matched your search.
+    {{else}}
+    {{#if topic}}
+    No {{topic.name}} stories have been posted yet.
+    {{else}}
+    No stories have been posted yet.
+    {{/if}}
+    {{/if}}
+  </li>
   {{/each}}
 </ol>
+
+{{#if pagination.count}}
+<nav class="pagination" aria-label="Feed pagination">
+  {{#if pagination.hasPrevious}}
+  <a class="btn secondary" href="{{pagination.previousHref}}">Previous</a>
+  {{else}}
+  <span class="btn secondary disabled" aria-disabled="true">Previous</span>
+  {{/if}}
+
+  <span>Page {{pagination.currentPage}} of {{pagination.totalPages}}</span>
+
+  {{#if pagination.hasNext}}
+  <a class="btn secondary" href="{{pagination.nextHref}}">Next</a>
+  {{else}}
+  <span class="btn secondary disabled" aria-disabled="true">Next</span>
+  {{/if}}
+</nav>
+{{/if}}

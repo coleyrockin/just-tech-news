@@ -1,31 +1,47 @@
 const router = require('express').Router();
-const { Post, User, Comment, Vote } = require('../../models');
+const { Post, User, Comment, Vote, Tag } = require('../../models');
 const withAuth = require('../../utils/auth');
 const { asyncHandler, httpError } = require('../../utils/http');
-const { postAttributes, postInclude, postOrder } = require('../../utils/post-query');
+const {
+  buildPagination,
+  fetchDiscoveryPosts,
+  normalizeDiscoveryQuery,
+  postAttributes,
+  postInclude
+} = require('../../utils/post-query');
+const { normalizeText, requirePositiveInteger, validateHttpUrl, validateTagIds } = require('../../utils/validation');
 
-const normalizeText = value => (typeof value === 'string' ? value.trim() : '');
-
-const requirePostId = value => {
-  const postId = Number(value);
-
-  if (!Number.isInteger(postId) || postId < 1) {
-    throw httpError(400, 'A valid post id is required.');
+const getExistingTagIds = async tagIds => {
+  if (!tagIds.length) {
+    return [];
   }
 
-  return postId;
+  const tags = await Tag.findAll({
+    where: {
+      id: tagIds
+    },
+    attributes: ['id']
+  });
+
+  if (tags.length !== tagIds.length) {
+    throw httpError(400, 'One or more selected topics do not exist.');
+  }
+
+  return tagIds;
 };
 
 router.get(
   '/',
-  asyncHandler(async (_req, res) => {
-    const posts = await Post.findAll({
-      attributes: postAttributes(),
-      include: postInclude(),
-      order: postOrder()
-    });
+  asyncHandler(async (req, res) => {
+    const filters = normalizeDiscoveryQuery(req.query);
+    const { count, rows } = await fetchDiscoveryPosts(Post, filters);
+    const posts = rows.map(post => post.get({ plain: true }));
 
-    res.json(posts);
+    res.json({
+      posts,
+      filters,
+      pagination: buildPagination({ count, page: filters.page, pageSize: filters.pageSize })
+    });
   })
 );
 
@@ -53,7 +69,8 @@ router.post(
   withAuth,
   asyncHandler(async (req, res) => {
     const title = normalizeText(req.body.title);
-    const post_url = normalizeText(req.body.post_url);
+    const post_url = validateHttpUrl(req.body.post_url);
+    const tagIds = await getExistingTagIds(validateTagIds(req.body.tag_ids));
 
     if (!title || !post_url) {
       throw httpError(400, 'Post title and URL are required.');
@@ -65,6 +82,8 @@ router.post(
       user_id: req.session.user_id
     });
 
+    await post.setTags(tagIds);
+
     res.status(201).json(post);
   })
 );
@@ -73,7 +92,7 @@ router.put(
   '/upvote',
   withAuth,
   asyncHandler(async (req, res) => {
-    const postId = requirePostId(req.body.post_id);
+    const postId = requirePositiveInteger(req.body.post_id, 'A valid post id is required.');
     const post = await Post.findByPk(postId);
 
     if (!post) {
@@ -82,7 +101,7 @@ router.put(
 
     const updatedPost = await Post.upvote(
       { post_id: postId, user_id: req.session.user_id },
-      { Vote, Comment, User }
+      { Vote, Comment, User, Tag }
     );
 
     res.json(updatedPost);
@@ -94,6 +113,7 @@ router.put(
   withAuth,
   asyncHandler(async (req, res) => {
     const title = normalizeText(req.body.title);
+    const tagIds = await getExistingTagIds(validateTagIds(req.body.tag_ids));
 
     if (!title) {
       throw httpError(400, 'Post title is required.');
@@ -111,6 +131,7 @@ router.put(
     }
 
     await post.update({ title });
+    await post.setTags(tagIds);
     res.json(post);
   })
 );

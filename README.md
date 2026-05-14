@@ -7,7 +7,7 @@
 ![Jest](https://img.shields.io/badge/Jest-30.x-C21325?style=flat&logo=jest&logoColor=white)
 ![License](https://img.shields.io/badge/License-ISC-blue?style=flat)
 
-Just Tech News is a full-stack tech-news sharing app built with Express, Handlebars, Sequelize, and MySQL. Users can create an account, publish links, discuss posts, and upvote stories in a focused Hacker News-style workflow.
+Just Tech News is a full-stack tech-news discovery app built with Express, Handlebars, Sequelize, and MySQL. Users can create an account, publish links, tag stories by topic, search the feed, discuss posts, and upvote stories in a focused Hacker News-style workflow.
 
 Live deployment: [https://just-tech-news.vercel.app](https://just-tech-news.vercel.app)
 
@@ -15,14 +15,15 @@ Live deployment: [https://just-tech-news.vercel.app](https://just-tech-news.verc
 
 ![Desktop homepage](docs/screenshots/desktop-home.png)
 
-![Mobile auth screen](docs/screenshots/mobile-login.png)
+![Mobile discovery feed](docs/screenshots/mobile-discovery.png)
 
 ## What It Does
 
 - Lets users sign up, log in, and keep an authenticated session.
-- Lets authenticated users create, edit, and delete their own posts.
+- Lets authenticated users create, tag, edit, and delete their own posts.
 - Lets authenticated users comment on posts and upvote each post once.
-- Shows public post lists, post detail pages, comment threads, and ownership-aware dashboard controls.
+- Lets visitors search, sort, paginate, and browse topic feeds.
+- Shows public post lists, topic pages, post detail pages, comment threads, and ownership-aware dashboard controls.
 - Runs locally with a traditional Express server and can deploy through Vercel or Netlify serverless adapters.
 
 ## MVP Features
@@ -31,6 +32,7 @@ Live deployment: [https://just-tech-news.vercel.app](https://just-tech-news.verc
 - Session storage through MySQL-backed `connect-session-sequelize`
 - Owner-only post, comment, and account mutations
 - One vote per user per post
+- Topic tags, topic pages, search, feed sorting, and pagination
 - Inline form errors and loading states
 - Responsive dark UI for desktop, tablet, and mobile
 - Public API responses that avoid exposing user email addresses
@@ -61,6 +63,7 @@ Create the database and seed it:
 
 ```bash
 mysql -u root -p < db/schema.sql
+npm run migrate
 npm run seeds
 ```
 
@@ -94,6 +97,7 @@ Copy `.env.example` to `.env` and fill in local values. `.env` is intentionally 
 | Command                          | Purpose                               |
 | -------------------------------- | ------------------------------------- |
 | `npm start`                      | Start the local Express server.       |
+| `npm run migrate`                | Apply pending MySQL schema migrations. |
 | `npm run seeds`                  | Reset and seed database tables.       |
 | `npm test`                       | Run Jest tests.                       |
 | `npm run lint`                   | Run ESLint.                           |
@@ -111,6 +115,7 @@ Run before pushing:
 
 ```bash
 npm run check
+npm run migrate
 npm audit
 npm audit --omit=dev
 ```
@@ -119,7 +124,7 @@ For release QA, also verify the DB-backed browser flow:
 
 1. Load schema and seed data.
 2. Start `npm start`.
-3. Verify signup, login, create post, edit post, comment, upvote, delete post, logout, protected-route redirect, and `/healthz`.
+3. Verify search, sort tabs, topic pages, pagination, signup, login, create post with tags, edit tags, comment, upvote, delete post, logout, protected-route redirect, and `/healthz`.
 4. Check desktop, tablet, and mobile layouts for overflow, cramped controls, and broken visual states.
 
 ## Deployment Notes
@@ -138,6 +143,8 @@ DATABASE_URL or JAWSDB_URL
 DB_SSL=true if required by the hosted MySQL provider
 ```
 
+Run `npm run migrate` against hosted MySQL before deploying changes that introduce new tables. The server still supports local `sequelize.sync({ force: false })` for developer convenience, but migrations are the safer path for production schema changes.
+
 ## Roadmap
 
 Shipped in the MVP:
@@ -148,20 +155,24 @@ Shipped in the MVP:
 - Responsive dark UI with inline form feedback
 - Serverless-ready Express runtime
 - Lint, tests, dependency audits, and CI workflow
+- Discovery v1: tags, search, sorting, topic feeds, pagination, and seeded tech topics
 
 Future improvements:
 
 - Add password reset and email verification
-- Add pagination and sorting for large post lists
+- Add saved posts/bookmarks and dashboard tabs
 - Add user profile pages with public contribution history
+- Add CSRF protection and rate limiting before broad public traffic
 - Add end-to-end browser tests in CI
 - Add admin moderation tools for spam or broken links
+- Add safe link preview cards after SSRF protections are in place
 
 ## Known Limitations
 
 - Hosted Vercel routes need production MySQL/session environment variables before the live deployment is fully usable.
 - The app uses server-rendered Handlebars and light browser JavaScript; there is no client-side SPA state layer.
-- Seed content is demo data for local QA, not editorial production content.
+- Trending is intentionally simple: it weighs votes, comments, and recency rather than using a complex recommendation system.
+- Seed content is demo/editorial-style data for local QA, not live newsroom content.
 
 ## Security Notes
 
@@ -171,6 +182,7 @@ Future improvements:
 - Session cookies are `httpOnly`, `sameSite=lax`, and secure in production.
 - Public user endpoints avoid returning email addresses.
 - External post links use `rel="noopener noreferrer"`.
+- Link previews are not fetched server-side yet, which avoids SSRF risk until a safe fetch policy exists.
 
 ## Credits
 

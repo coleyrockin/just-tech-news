@@ -2,104 +2,103 @@ const { Post } = require('../models');
 
 const postdata = [
   {
-    title: 'Donec posuere metus vitae ipsum.',
-    post_url: 'https://buzzfeed.com/in/imperdiet/et/commodo/vulputate.png',
+    title: 'OpenAI releases a practical guide to building reliable agent workflows',
+    post_url: 'https://openai.com/index/new-tools-for-building-agents/',
     user_id: 10
   },
   {
-    title: 'Morbi non quam nec dui luctus rutrum.',
-    post_url: 'https://nasa.gov/donec.json',
+    title: 'CISA shares secure-by-design guidance for small engineering teams',
+    post_url: 'https://www.cisa.gov/resources-tools/resources/secure-by-design',
     user_id: 8
   },
   {
-    title: 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.',
-    post_url: 'https://europa.eu/parturient/montes/nascetur/ridiculus/mus/etiam/vel.aspx',
+    title: 'The modern web performance checklist teams are using in production',
+    post_url: 'https://web.dev/articles/performance',
     user_id: 1
   },
   {
-    title: 'Nunc purus.',
-    post_url: 'http://desdev.cn/enim/blandit/mi.jpg',
+    title: 'How early-stage startups are using AI copilots without losing product focus',
+    post_url: 'https://a16z.com/ai-startups/',
     user_id: 4
   },
   {
-    title: 'Pellentesque eget nunc.',
-    post_url: 'http://google.ca/nam/nulla/integer.aspx',
+    title: 'Inside the database choices behind fast serverless applications',
+    post_url: 'https://aws.amazon.com/serverless/',
     user_id: 7
   },
   {
-    title: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',
-    post_url: 'https://stanford.edu/consequat.png',
+    title: 'Why accessibility audits catch more than screen reader defects',
+    post_url: 'https://developer.mozilla.org/en-US/docs/Learn/Accessibility',
     user_id: 4
   },
   {
-    title: 'In hac habitasse platea dictumst.',
-    post_url: 'http://edublogs.org/non/ligula/pellentesque.js',
+    title: 'Passkeys are changing the shape of consumer authentication',
+    post_url: 'https://www.passkeys.io/',
     user_id: 1
   },
   {
-    title: 'Morbi non quam nec dui luctus rutrum.',
-    post_url: 'http://ucla.edu/consequat/nulla.html',
+    title: 'A maintainer guide to keeping open-source issue queues healthy',
+    post_url: 'https://opensource.guide/best-practices/',
     user_id: 1
   },
   {
-    title: 'Duis ac nibh.',
-    post_url: 'http://theguardian.com/dui/vel/nisl/duis/ac/nibh.aspx',
+    title: 'Product-led growth lessons from technical developer tools',
+    post_url: 'https://www.productled.org/foundations/what-is-product-led-growth',
     user_id: 9
   },
   {
-    title: 'Curabitur at ipsum ac tellus semper interdum.',
-    post_url: 'https://reverbnation.com/ligula/sit.jpg',
+    title: 'Serverless cold starts are becoming a design problem, not just an infra problem',
+    post_url: 'https://vercel.com/docs/functions',
     user_id: 5
   },
   {
-    title: 'In hac habitasse platea dictumst.',
-    post_url: 'http://china.com.cn/lectus/vestibulum.json',
+    title: 'The chip supply chain behind the next wave of edge AI devices',
+    post_url: 'https://spectrum.ieee.org/semiconductors',
     user_id: 3
   },
   {
-    title: 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.',
-    post_url: 'http://networksolutions.com/nam/ultrices/libero/non/mattis/pulvinar.json',
+    title: 'How to write open-source docs that reduce maintainer support load',
+    post_url: 'https://www.writethedocs.org/guide/',
     user_id: 10
   },
   {
-    title: 'Donec dapibus.',
-    post_url: 'https://instagram.com/ac/neque/duis/bibendum/morbi/non.xml',
+    title: 'Security teams are shifting from annual audits to continuous controls',
+    post_url: 'https://owasp.org/www-project-devsecops-guideline/',
     user_id: 8
   },
   {
-    title: 'Nulla tellus.',
-    post_url: 'https://lycos.com/natoque/penatibus/et.html',
+    title: 'Vector databases explained for product engineers',
+    post_url: 'https://www.pinecone.io/learn/vector-database/',
     user_id: 3
   },
   {
-    title: 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.',
-    post_url: 'https://gmpg.org/lorem.jpg',
+    title: 'CSS container queries are finally changing component architecture',
+    post_url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_container_queries',
     user_id: 3
   },
   {
-    title:
-      'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam.',
-    post_url: 'https://paginegialle.it/mattis/egestas.jsp',
+    title: 'What founders should know before adding AI to a workflow product',
+    post_url: 'https://www.ycombinator.com/library',
     user_id: 7
   },
   {
-    title: 'In hac habitasse platea dictumst.',
-    post_url: 'http://wikia.com/turpis/eget.jpg',
+    title: 'Robotics teams are borrowing deployment patterns from web engineering',
+    post_url: 'https://spectrum.ieee.org/robotics',
     user_id: 6
   },
   {
-    title: 'Etiam justo.',
-    post_url: 'https://shareasale.com/quis.json',
+    title: 'How small open-source projects can handle security disclosures responsibly',
+    post_url: 'https://github.com/ossf/scorecard',
     user_id: 4
   },
   {
-    title: 'Nulla ut erat id mauris vulputate elementum.',
-    post_url: 'http://java.com/diam/neque/vestibulum/eget/vulputate/ut/ultrices.png',
+    title: 'Agentic coding tools need better evals, not just bigger context windows',
+    post_url: 'https://github.blog/ai-and-ml/',
     user_id: 6
   },
   {
-    title: 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.',
-    post_url: 'https://java.com/at/nibh/in.png',
+    title: 'Designing resilient Node APIs for hosted MySQL and serverless runtimes',
+    post_url: 'https://nodejs.org/en/learn/getting-started/introduction-to-nodejs',
     user_id: 7
   }
 ];

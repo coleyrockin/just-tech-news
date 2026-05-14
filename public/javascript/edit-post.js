@@ -3,7 +3,10 @@ async function editFormHandler(event) {
 
   const form = event.currentTarget;
   const button = form.querySelector('button[type="submit"]');
-  const title = document.querySelector('input[name="post-title"]').value.trim();
+  const title = form.querySelector('input[name="post-title"]').value.trim();
+  const tag_ids = Array.from(form.querySelectorAll('input[name="tag-ids"]:checked')).map(
+    input => input.value
+  );
   const id = window.location.pathname.split('/').filter(Boolean).pop();
 
   if (!title) {
@@ -18,7 +21,8 @@ async function editFormHandler(event) {
     await window.apiRequest(`/api/posts/${id}`, {
       method: 'PUT',
       body: JSON.stringify({
-        title
+        title,
+        tag_ids
       }),
       headers: {
         'Content-Type': 'application/json'
